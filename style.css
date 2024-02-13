@@ -79,7 +79,7 @@ main {
   width: 100%;
   max-width: 980px;
   height: 500px;
-  background-color: #fff;
+  /* background-color: #fff; */
   border-radius: 26px;
 }
 .list-item {
@@ -92,6 +92,8 @@ main {
   box-sizing: border-box;
   justify-content: space-between;
   gap: 13px;
+  margin-bottom: 10px;
+  background-color: #fff;
 }
 .item-bt {
   background: none;
@@ -103,4 +105,10 @@ main {
   width: 100%;
   font-size: 18px;
   color: #1d1d1f;
+}
+.tesk-done {
+  text-decoration: line-through;
+}
+.task-item-bg {
+  cursor: pointer;
 }

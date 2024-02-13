@@ -9,32 +9,115 @@
 let taskInput = document.getElementById("task-input");
 let addBt = document.getElementById("add-bt");
 let taskList = [];
+let tabs = document.querySelectorAll(".task-item-bg");
+let mode = "all";
+let filterList = [];
 
-console.log(taskInput);
+console.log(tabs);
 
 addBt.addEventListener("click", addTask);
 
+for (let i = 0; i < tabs.length; i++) {
+  tabs[i].addEventListener("click", function (e) {
+    filter(e);
+  });
+}
+
 function addTask() {
-  let taskContent = taskInput.value;
-  taskList.push(taskContent);
+  let task = {
+    id: randomIDGenerate(),
+    taskContent: taskInput.value,
+    isComplete: false,
+  };
+  taskList.push(task);
   console.log(taskList);
   render();
 }
 
 function render() {
+  let list = [];
+  if (mode === "all") {
+    list = taskList;
+  } else if (mode === "ongoing" || mode === "done") {
+    list = filterList;
+  }
+
   let resultHTML = "";
-  for (let i = 0; i < taskList.length; i++) {
-    resultHTML += `
+  for (let i = 0; i < list.length; i++) {
+    if (list[i].isComplete == true) {
+      resultHTML += `
         <div class="list-item">
-            <button class="item-bt check">
+            <button onclick="toggleComplete('${list[i].id}')" class="item-bt check">
                 <img src="checkmark.circle 1.svg" alt="check" />
             </button>
-            <span class="item-text">${taskList[i]}</span>
-            <button class="item-bt delete">
+            <span class="tesk-done item-text">${list[i].taskContent}</span>
+            <button onclick="deleteTask('${list[i].id}')" class="item-bt delete">
+                <img src="trash.circle 1.svg" alt="delete" />
+            </button>
+        </div>
+        `;
+    } else {
+      resultHTML += `
+        <div class="list-item">
+            <button onclick="toggleComplete('${list[i].id}')" class="item-bt check">
+                <img src="checkmark.circle 1.svg" alt="check" />
+            </button>
+            <span class="item-text">${list[i].taskContent}</span>
+            <button onclick="deleteTask('${list[i].id}')" class="item-bt delete">
                 <img src="trash.circle 1.svg" alt="delete" />
             </button>
         </div>
     `;
+    }
   }
+
   document.querySelector(".list").innerHTML = resultHTML;
+}
+
+function toggleComplete(id) {
+  console.log(id);
+  for (let i = 0; i < taskList.length; i++) {
+    if (taskList[i].id == id) {
+      taskList[i].isComplete = !taskList[i].isComplete;
+      break;
+    }
+  }
+  render();
+  console.log(taskList);
+}
+
+function deleteTask(id) {
+  for (let i = 0; i < taskList.length; i++) {
+    if (taskList[i].id == id) {
+      taskList.splice(i, 1);
+      break;
+    }
+  }
+  render();
+}
+
+function filter(e) {
+  mode = e.target.id;
+  filterList = [];
+  if (mode === "all") {
+    render();
+  } else if (mode === "ongoing") {
+    for (let i = 0; i < taskList.length; i++) {
+      if (taskList[i].isComplete === false) {
+        filterList.push(taskList[i]);
+      }
+    }
+    render();
+  } else if (mode == "done") {
+    for (let i = 0; i < taskList.length; i++) {
+      if (taskList[i].isComplete === true) {
+        filterList.push(taskList[i]);
+      }
+    }
+    render();
+  }
+}
+
+function randomIDGenerate() {
+  return "_" + Math.random().toString(36).substr(2, 9);
 }
