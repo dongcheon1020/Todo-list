@@ -3,15 +3,14 @@
   padding: 0;
   font-family: Arial, Helvetica, sans-serif;
 }
-body,
-html {
-  width: 100vw;
-  height: 100vh;
-}
+
 header {
   width: 100vw;
   background-color: #1d1d1f;
   height: 44px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.4);
+  z-index: 99;
+  position: relative;
 }
 .header-center {
   width: 100%;
@@ -29,7 +28,7 @@ header {
 }
 main {
   width: 100vw;
-  height: calc(100% - 44px);
+  height: calc(100vh - 44px);
   background-color: #f5f5f7;
 }
 .main-center {
@@ -38,6 +37,7 @@ main {
   height: 100%;
   margin: auto;
   padding-top: 82px;
+  box-sizing: border-box;
 }
 .container {
   display: flex;
@@ -67,13 +67,19 @@ main {
   outline: none;
   border: none;
 }
-
+#add-bt {
+  background: none;
+  border: none;
+  outline: none;
+  vertical-align: bottom;
+  cursor: pointer;
+}
 .list {
   width: 100%;
   max-width: 980px;
-  height: 500px;
-  /* background-color: #fff; */
+  height: 80%;
   border-radius: 26px;
+  overflow: auto;
 }
 .list-item {
   width: 100%;
@@ -87,6 +93,10 @@ main {
   gap: 13px;
   margin-bottom: 10px;
   background-color: #fff;
+  transition: box-shadow 0.3s ease;
+}
+.list-item:hover {
+  box-shadow: 2px 4px 12px rgba(0, 0, 0, 0.08);
 }
 .item-bt {
   background: none;
@@ -113,4 +123,7 @@ main {
   background-color: #000;
   position: absolute;
   height: 2px;
+}
+.tesk-done-container {
+  opacity: 0.6;
 }

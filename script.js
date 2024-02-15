@@ -64,6 +64,8 @@ function addTask() {
   };
   taskList.push(task);
   console.log(taskList);
+  taskInput.value = "";
+
   render();
 }
 
@@ -79,9 +81,9 @@ function render() {
   for (let i = 0; i < list.length; i++) {
     if (list[i].isComplete == true) {
       resultHTML += `
-        <div class="list-item">
+        <div class="tesk-done-container list-item">
             <button onclick="toggleComplete('${list[i].id}')" class="item-bt check">
-                <img src="checkmark.circle 1.svg" alt="check" />
+            <img src="arrow.counterclockwise.circle 1.svg" alt="replay">
             </button>
             <span class="tesk-done item-text">${list[i].taskContent}</span>
             <button onclick="deleteTask('${list[i].id}')" class="item-bt delete">
@@ -108,46 +110,44 @@ function render() {
 }
 
 function toggleComplete(id) {
-  console.log(id);
   for (let i = 0; i < taskList.length; i++) {
     if (taskList[i].id == id) {
       taskList[i].isComplete = !taskList[i].isComplete;
       break;
     }
   }
-  render();
+  filter();
 }
 
 function deleteTask(id) {
   for (let i = 0; i < taskList.length; i++) {
     if (taskList[i].id == id) {
       taskList.splice(i, 1);
-      break;
+      //   break;
     }
   }
-  render();
+  filter();
 }
 
 function filter(e) {
-  mode = e.target.id;
-  filterList = [];
-  if (mode === "all") {
-    render();
-  } else if (mode === "ongoing") {
-    for (let i = 0; i < taskList.length; i++) {
-      if (taskList[i].isComplete === false) {
-        filterList.push(taskList[i]);
-      }
-    }
-    render();
-  } else if (mode == "done") {
-    for (let i = 0; i < taskList.length; i++) {
-      if (taskList[i].isComplete === true) {
-        filterList.push(taskList[i]);
-      }
-    }
-    render();
+  if (e) {
+    mode = e.target.id;
   }
+  filterList = [];
+  if (mode === "ongoing") {
+    for (let i = 0; i < taskList.length; i++) {
+      if (taskList[i].isComplete == false) {
+        filterList.push(taskList[i]);
+      }
+    }
+  } else if (mode === "done") {
+    for (let i = 0; i < taskList.length; i++) {
+      if (taskList[i].isComplete) {
+        filterList.push(taskList[i]);
+      }
+    }
+  }
+  render();
 }
 
 function randomIDGenerate() {
