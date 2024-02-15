@@ -67,14 +67,7 @@ main {
   outline: none;
   border: none;
 }
-.under-line {
-  height: 2px;
-  background-color: #000;
-  position: absolute;
-  width: 30px;
-  left: 0;
-  bottom: 0;
-}
+
 .list {
   width: 100%;
   max-width: 980px;
@@ -109,6 +102,15 @@ main {
 .tesk-done {
   text-decoration: line-through;
 }
-.task-item-bg {
+.task-item-bt {
   cursor: pointer;
+}
+
+.under-line {
+  transition: all 0.3s ease;
+}
+.under-line {
+  background-color: #000;
+  position: absolute;
+  height: 2px;
 }

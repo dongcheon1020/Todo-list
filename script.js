@@ -9,11 +9,44 @@
 let taskInput = document.getElementById("task-input");
 let addBt = document.getElementById("add-bt");
 let taskList = [];
-let tabs = document.querySelectorAll(".task-item-bg");
+let tabs = document.querySelectorAll(".task-item-bt");
 let mode = "all";
 let filterList = [];
+let underLine = document.querySelector(".under-line");
+let taskItemBts = document.querySelectorAll(".task-item-bt");
+let all = document.getElementById("all");
 
-console.log(tabs);
+taskInput.addEventListener("keypress", function (event) {
+  if (event.key === "Enter") {
+    addBt.click();
+    taskInput.value = "";
+  }
+});
+taskInput.addEventListener("focus", function () {
+  taskInput.value = "";
+});
+
+underLine.style.left = all.offsetLeft + "px";
+underLine.style.width = all.offsetWidth + "px";
+underLine.style.top = all.offsetTop + all.offsetHeight + "px";
+
+taskItemBts.forEach((menu) =>
+  menu.addEventListener("click", (e) => horizontalUnderLine(e))
+);
+function horizontalUnderLine(e) {
+  underLine.style.left = e.currentTarget.offsetLeft + "px";
+  underLine.style.width = e.currentTarget.offsetWidth + "px";
+  underLine.style.top =
+    e.currentTarget.offsetTop + e.currentTarget.offsetHeight + "px";
+}
+
+addBt.addEventListener("click", addTask);
+
+for (let i = 0; i < tabs.length; i++) {
+  tabs[i].addEventListener("click", function (e) {
+    filter(e);
+  });
+}
 
 addBt.addEventListener("click", addTask);
 
@@ -83,7 +116,6 @@ function toggleComplete(id) {
     }
   }
   render();
-  console.log(taskList);
 }
 
 function deleteTask(id) {
